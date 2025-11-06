@@ -4,7 +4,7 @@ import threading
 from flask import Flask, request, jsonify, send_from_directory
 from transformers import T5Tokenizer, T5ForConditionalGeneration, AutoTokenizer, AutoModelForSequenceClassification
 from pyngrok import ngrok
-import torch, requests, re, os, random
+import torch, requests, re, os
 from bs4 import BeautifulSoup
 
 # === INIT ===
@@ -123,6 +123,11 @@ def analyze():
         "original_content": original_content
     })
 
+# === Tambahan: Route untuk frontend agar tahu URL ngrok ===
+@app.route("/backend_url")
+def get_backend_url():
+    return jsonify({"backend_url": public_url})
+
 # === NGROK ===
 @app.route("/stop_ngrok", methods=["POST"])
 def stop_ngrok():
@@ -138,10 +143,6 @@ public_url = ngrok.connect(5060, bind_tls=True).public_url
 print("🚀 Public URL:", public_url)
 print("Gunakan aplikasi dari:", public_url)
 
-# Simpan URL untuk frontend
-with open("backend_url.txt", "w") as f:
-    f.write(public_url)
-    
 # === RUN FLASK ===
 def run_app():
     app.run(host="0.0.0.0", port=5060)
