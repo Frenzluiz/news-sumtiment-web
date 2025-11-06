@@ -1,4 +1,19 @@
-const backendURL = "http://127.0.0.1:5060"; 
+let backendURL = "";
+
+async function initBackendURL() {
+  try {
+    const res = await fetch("/backend_url");
+    const data = await res.json();
+    backendURL = data.backend_url;
+    console.log("🌐 Backend URL terdeteksi:", backendURL);
+  } catch (e) {
+    console.error("❌ Gagal mendapatkan backend URL:", e);
+    document.getElementById("result").innerHTML = '<div class="text-danger">Tidak dapat terhubung ke backend.</div>';
+  }
+}
+
+// Panggil saat halaman pertama kali dimuat
+initBackendURL();
 
 document.getElementById("analyze-btn").addEventListener("click", async () => {
   const url = document.getElementById("url").value.trim();
@@ -6,6 +21,11 @@ document.getElementById("analyze-btn").addEventListener("click", async () => {
 
   if (!url) {
     resultDiv.innerHTML = '<div class="text-danger">Masukkan URL!</div>';
+    return;
+  }
+
+  if (!backendURL) {
+    resultDiv.innerHTML = '<div class="text-danger">Backend belum siap. Coba lagi dalam beberapa detik.</div>';
     return;
   }
 
@@ -24,12 +44,12 @@ document.getElementById("analyze-btn").addEventListener("click", async () => {
       resultDiv.innerHTML = `
         <h4>🧾 Ringkasan:</h4><p>${data.summary}</p>
         <h5>😊 Sentimen:</h5><p>${data.sentiment}</p>
-        <h5>📰 Cuplikan Konten:</h5><p>${data.original_content}</p>
+        <h5>📰 Cuplikan Konten Asli:</h5><p>${data.original_content}</p>
       `;
     } else {
       resultDiv.innerHTML = `<div class="text-danger">⚠️ ${data.error}</div>`;
     }
   } catch (e) {
-    resultDiv.innerHTML = `<div class="text-danger">❌ ${e.message}</div>`;
+    resultDiv.innerHTML = `<div class="text-danger">❌ Gagal menghubungi backend: ${e.message}</div>`;
   }
 });
