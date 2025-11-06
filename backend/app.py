@@ -138,6 +138,10 @@ public_url = ngrok.connect(5060, bind_tls=True).public_url
 print("🚀 Public URL:", public_url)
 print("Gunakan aplikasi dari:", public_url)
 
+# Simpan URL untuk frontend
+with open("backend_url.txt", "w") as f:
+    f.write(public_url)
+    
 # === RUN FLASK ===
 def run_app():
     app.run(host="0.0.0.0", port=5060)
