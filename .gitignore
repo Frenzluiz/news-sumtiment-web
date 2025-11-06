@@ -1,0 +1,7 @@
+news-sumtiment-web/backend/models/
+*.bin
+*.safetensors
+*.pt
+*.zip
+__pycache__/
+*.pyc
