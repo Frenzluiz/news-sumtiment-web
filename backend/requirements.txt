@@ -6,5 +6,4 @@ sentencepiece
 accelerate
 beautifulsoup4
 requests
-pyngrok
-nest_asyncio
+
