@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ## 🚀 Menjalankan Aplikasi
 1. Jalankan Flask backend:
    python app.py
-2. Backend akan otomatis terbuka via ngrok (jika menggunakan ngrok) atau bisa diakses di http://127.0.0.1:5017/
+2. Backend akan bisa diakses di http://127.0.0.1:5017/
 
 3. Buka browser, akses frontend `index.html` untuk memasukkan link berita dan melakukan **summarization + sentiment analysis**.
 
