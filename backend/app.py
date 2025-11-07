@@ -84,9 +84,46 @@ def analyze_sentiment(text):
     except:
         pass
 
-    # fallback keyword
-    negatif_keywords = ['bunuh diri','pembunuhan','teror','bom','penyanderaan','kekerasan ekstrem']
-    positif_keywords = ['keuntungan','pertumbuhan','sukses','prestasi','donasi','inovasi']
+    negatif_keywords = [
+    'bunuh diri', 'pembunuhan', 'teror', 'bom', 'penyanderaan', 'kekerasan ekstrem',
+    'kematian tragis', 'kecelakaan maut', 'bencana alam', 'krisis ekonomi',
+    'tsunami', 'gempa bumi', 'gunung meletus', 'kebakaran hebat', 'banjir bandang',
+    'tanah longsor', 'badai tropis', 'kecelakaan pesawat', 'tenggelam', 'ledakan',
+    'wabah', 'pandemi', 'epidemi', 'wabah penyakit', 'kematian massal',
+    'kudeta', 'revolusi berdarah', 'perang saudara', 'konflik bersenjata', 'terorisme',
+    'penembakan massal', 'kerusuhan', 'pemberontakan', 'kekacauan', 'anarki','israel',
+    'phk', 'korupsi', 'resesi', 'inflasi', 'krisis moneter', 'kebangkrutan',
+    'utang', 'gagal bayar', 'pailit', 'pemutusan hubungan kerja',
+    'demonstrasi', 'pencurian', 'kebakaran', 'banjir', 'konflik', 'serangan',
+    'penipuan', 'kekeringan', 'protes', 'unjuk rasa', 'kericuhan',
+    'penangkapan', 'penjara', 'vonis', 'hukuman', 'tuntutan',
+    'sakit', 'penyakit', 'wabah', 'rawat inap', 'operasi', 'kronis',
+    'wabah lokal', 'isolasi', 'karantina',
+    'kekalahan', 'cedera', 'diskualifikasi', 'sanksi', 'larangan',
+    'kontroversi', 'skandal', 'protests'
+]
+
+positif_keywords = [
+    'prestasi', 'sukses', 'berhasil', 'penghargaan', 'pencapaian', 'inovasi',
+    'keuntungan', 'pertumbuhan', 'kerjasama', 'donasi', 'investasi', 'ekspor',
+    'pengembangan', 'ekspansi', 'kolaborasi', 'kontrak', 'kerja sama',
+    'beasiswa', 'pendidikan', 'sekolah', 'universitas', 'lulus', 'wisuda',
+    'prestasi akademik', 'penelitian', 'riset', 'temuan', 'studi',
+    'sembuh', 'pemulihan', 'vaksin', 'pengobatan', 'terapi', 'kesehatan',
+    'obat', 'penyembuhan', 'rehabilitasi',
+    'pertandingan', 'kompetisi', 'turnamen', 'olahraga', 'latihan', 'prestasi',
+    'atlet', 'pelatih', 'tim', 'klub',
+    'juara', 'rekor', 'terobosan', 'revolusi', 'kemenangan', 'penghargaan internasional',
+    'prestasi gemilang', 'kesuksesan besar', 'pencapaian tertinggi', 'medali emas',
+    'piala', 'trofi', 'kejuaraan', 'gelar', 'predikat',
+    'inovasi revolusioner', 'teknologi mutakhir', 'penemuan besar', 'terobosan ilmiah',
+    'paten', 'hak cipta', 'lisensi',
+    'rekor profit', 'laba tertinggi', 'pertumbuhan eksponensial', 'market leader',
+    'dominasi pasar', 'ekspansi global',
+    'rekor donasi', 'bantuan kemanusiaan', 'pengabdian masyarakat', 'penghargaan nasional',
+    'pengakuan internasional', 'nobel', 'penghargaan presiden'
+]
+
     text_lower = re.sub(r'[^\w\s]', '', text.lower())
     if any(k in text_lower for k in negatif_keywords): return "Negatif"
     if any(k in text_lower for k in positif_keywords): return "Positif"
@@ -132,4 +169,4 @@ def analyze():
 
 # === RUN APP ===
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5069, debug=True)
+    app.run(host="0.0.0.0", port=5017, debug=True)
