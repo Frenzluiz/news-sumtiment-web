@@ -38,8 +38,10 @@ def scrape_title(url):
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         title_tag = soup.find("h1", class_=lambda x: x and "detail__title" in x)
-        if title_tag: return title_tag.get_text(strip=True)
-        if soup.title: return soup.title.get_text(strip=True)
+        if title_tag: 
+            return title_tag.get_text(strip=True)
+        if soup.title: 
+            return soup.title.get_text(strip=True)
         return "Judul tidak ditemukan"
     except Exception as e:
         return f"Error scraping: {e}"
@@ -84,49 +86,52 @@ def analyze_sentiment(text):
     except:
         pass
 
+    # --- fallback keyword ---
     negatif_keywords = [
-    'bunuh diri', 'pembunuhan', 'teror', 'bom', 'penyanderaan', 'kekerasan ekstrem',
-    'kematian tragis', 'kecelakaan maut', 'bencana alam', 'krisis ekonomi',
-    'tsunami', 'gempa bumi', 'gunung meletus', 'kebakaran hebat', 'banjir bandang',
-    'tanah longsor', 'badai tropis', 'kecelakaan pesawat', 'tenggelam', 'ledakan',
-    'wabah', 'pandemi', 'epidemi', 'wabah penyakit', 'kematian massal',
-    'kudeta', 'revolusi berdarah', 'perang saudara', 'konflik bersenjata', 'terorisme',
-    'penembakan massal', 'kerusuhan', 'pemberontakan', 'kekacauan', 'anarki','israel',
-    'phk', 'korupsi', 'resesi', 'inflasi', 'krisis moneter', 'kebangkrutan',
-    'utang', 'gagal bayar', 'pailit', 'pemutusan hubungan kerja',
-    'demonstrasi', 'pencurian', 'kebakaran', 'banjir', 'konflik', 'serangan',
-    'penipuan', 'kekeringan', 'protes', 'unjuk rasa', 'kericuhan',
-    'penangkapan', 'penjara', 'vonis', 'hukuman', 'tuntutan',
-    'sakit', 'penyakit', 'wabah', 'rawat inap', 'operasi', 'kronis',
-    'wabah lokal', 'isolasi', 'karantina',
-    'kekalahan', 'cedera', 'diskualifikasi', 'sanksi', 'larangan',
-    'kontroversi', 'skandal', 'protests'
-]
+        'bunuh diri', 'pembunuhan', 'teror', 'bom', 'penyanderaan', 'kekerasan ekstrem',
+        'kematian tragis', 'kecelakaan maut', 'bencana alam', 'krisis ekonomi',
+        'tsunami', 'gempa bumi', 'gunung meletus', 'kebakaran hebat', 'banjir bandang',
+        'tanah longsor', 'badai tropis', 'kecelakaan pesawat', 'tenggelam', 'ledakan',
+        'wabah', 'pandemi', 'epidemi', 'wabah penyakit', 'kematian massal',
+        'kudeta', 'revolusi berdarah', 'perang saudara', 'konflik bersenjata', 'terorisme',
+        'penembakan massal', 'kerusuhan', 'pemberontakan', 'kekacauan', 'anarki','israel',
+        'phk', 'korupsi', 'resesi', 'inflasi', 'krisis moneter', 'kebangkrutan',
+        'utang', 'gagal bayar', 'pailit', 'pemutusan hubungan kerja',
+        'demonstrasi', 'pencurian', 'kebakaran', 'banjir', 'konflik', 'serangan',
+        'penipuan', 'kekeringan', 'protes', 'unjuk rasa', 'kericuhan',
+        'penangkapan', 'penjara', 'vonis', 'hukuman', 'tuntutan',
+        'sakit', 'penyakit', 'wabah', 'rawat inap', 'operasi', 'kronis',
+        'wabah lokal', 'isolasi', 'karantina',
+        'kekalahan', 'cedera', 'diskualifikasi', 'sanksi', 'larangan',
+        'kontroversi', 'skandal', 'protests'
+    ]
 
-positif_keywords = [
-    'prestasi', 'sukses', 'berhasil', 'penghargaan', 'pencapaian', 'inovasi',
-    'keuntungan', 'pertumbuhan', 'kerjasama', 'donasi', 'investasi', 'ekspor',
-    'pengembangan', 'ekspansi', 'kolaborasi', 'kontrak', 'kerja sama',
-    'beasiswa', 'pendidikan', 'sekolah', 'universitas', 'lulus', 'wisuda',
-    'prestasi akademik', 'penelitian', 'riset', 'temuan', 'studi',
-    'sembuh', 'pemulihan', 'vaksin', 'pengobatan', 'terapi', 'kesehatan',
-    'obat', 'penyembuhan', 'rehabilitasi',
-    'pertandingan', 'kompetisi', 'turnamen', 'olahraga', 'latihan', 'prestasi',
-    'atlet', 'pelatih', 'tim', 'klub',
-    'juara', 'rekor', 'terobosan', 'revolusi', 'kemenangan', 'penghargaan internasional',
-    'prestasi gemilang', 'kesuksesan besar', 'pencapaian tertinggi', 'medali emas',
-    'piala', 'trofi', 'kejuaraan', 'gelar', 'predikat',
-    'inovasi revolusioner', 'teknologi mutakhir', 'penemuan besar', 'terobosan ilmiah',
-    'paten', 'hak cipta', 'lisensi',
-    'rekor profit', 'laba tertinggi', 'pertumbuhan eksponensial', 'market leader',
-    'dominasi pasar', 'ekspansi global',
-    'rekor donasi', 'bantuan kemanusiaan', 'pengabdian masyarakat', 'penghargaan nasional',
-    'pengakuan internasional', 'nobel', 'penghargaan presiden'
-]
+    positif_keywords = [
+        'prestasi', 'sukses', 'berhasil', 'penghargaan', 'pencapaian', 'inovasi',
+        'keuntungan', 'pertumbuhan', 'kerjasama', 'donasi', 'investasi', 'ekspor',
+        'pengembangan', 'ekspansi', 'kolaborasi', 'kontrak', 'kerja sama',
+        'beasiswa', 'pendidikan', 'sekolah', 'universitas', 'lulus', 'wisuda',
+        'prestasi akademik', 'penelitian', 'riset', 'temuan', 'studi',
+        'sembuh', 'pemulihan', 'vaksin', 'pengobatan', 'terapi', 'kesehatan',
+        'obat', 'penyembuhan', 'rehabilitasi',
+        'pertandingan', 'kompetisi', 'turnamen', 'olahraga', 'latihan', 'prestasi',
+        'atlet', 'pelatih', 'tim', 'klub',
+        'juara', 'rekor', 'terobosan', 'revolusi', 'kemenangan', 'penghargaan internasional',
+        'prestasi gemilang', 'kesuksesan besar', 'pencapaian tertinggi', 'medali emas',
+        'piala', 'trofi', 'kejuaraan', 'gelar', 'predikat',
+        'inovasi revolusioner', 'teknologi mutakhir', 'penemuan besar', 'terobosan ilmiah',
+        'paten', 'hak cipta', 'lisensi',
+        'rekor profit', 'laba tertinggi', 'pertumbuhan eksponensial', 'market leader',
+        'dominasi pasar', 'ekspansi global',
+        'rekor donasi', 'bantuan kemanusiaan', 'pengabdian masyarakat', 'penghargaan nasional',
+        'pengakuan internasional', 'nobel', 'penghargaan presiden'
+    ]
 
     text_lower = re.sub(r'[^\w\s]', '', text.lower())
-    if any(k in text_lower for k in negatif_keywords): return "Negatif"
-    if any(k in text_lower for k in positif_keywords): return "Positif"
+    if any(k in text_lower for k in negatif_keywords):
+        return "Negatif"
+    if any(k in text_lower for k in positif_keywords):
+        return "Positif"
     return "Netral"
 
 # === ROUTE FRONTEND ===
@@ -139,7 +144,8 @@ def index():
 def analyze():
     data = request.json
     url = data.get("url", "").strip()
-    if not url: return jsonify({"error": "URL tidak diberikan."}), 400
+    if not url: 
+        return jsonify({"error": "URL tidak diberikan."}), 400
 
     title = scrape_title(url)
     content = scrape_content(url)
@@ -149,7 +155,7 @@ def analyze():
     clean_paragraphs = [clean_text(p) for p in content if clean_text(p)]
     clean_content = " ".join(clean_paragraphs)
 
-    # Summarization
+    # --- Summarization ---
     summary = ""
     sentences = re.split(r'(?<=[.!?]) +', clean_content)
     sentences = [s.strip() for s in sentences if s.strip()]
@@ -158,14 +164,27 @@ def analyze():
     else:
         input_text = "summarize: " + clean_content[:2000]
         inputs_summ = tokenizer_summ(input_text, return_tensors="pt", truncation=True, max_length=512)
-        summary_ids = model_summ.generate(inputs_summ["input_ids"], max_length=100, min_length=30, num_beams=2, length_penalty=1.5, early_stopping=True, no_repeat_ngram_size=3)
+        summary_ids = model_summ.generate(
+            inputs_summ["input_ids"],
+            max_length=100,
+            min_length=30,
+            num_beams=2,
+            length_penalty=1.5,
+            early_stopping=True,
+            no_repeat_ngram_size=3
+        )
         summary = tokenizer_summ.decode(summary_ids[0], skip_special_tokens=True).strip()
-        if len(summary.split()) < 10: summary = sentences[0] if sentences else "Ringkasan tidak tersedia."
+        if len(summary.split()) < 10: 
+            summary = sentences[0] if sentences else "Ringkasan tidak tersedia."
 
     sentiment = analyze_sentiment(title)
     original_content = clean_paragraphs[0][:500]+"..." if clean_paragraphs else clean_content[:500]+"..."
 
-    return jsonify({"summary": summary, "sentiment": sentiment, "original_content": original_content})
+    return jsonify({
+        "summary": summary,
+        "sentiment": sentiment,
+        "original_content": original_content
+    })
 
 # === RUN APP ===
 if __name__ == "__main__":
